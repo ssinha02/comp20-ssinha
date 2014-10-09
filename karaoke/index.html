@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<head>
+<meta charset="utf-8" />
+<title>Daydream Believer</title>
+<!--<link rel="stylesheet" href="style.css" type="txt/css" />-->
+</head>
+
+<body>
+<h1 id="title">Daydream Believer</h1>
+
+<video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" controls></video>
+<div id="lyrics"></div>
+
+<script>
+
+var lyric = document.getElementById("lyrics");
+var video = document.getElementById("music_video");
+
+video.addEventListener("timeupdate", function(){
+	if (video.currentTime > 5.5 && video.currentTime < 35){
+		lyric.innerHTML = "Oh, I could hide 'neath the wings <br/> Of the bluebird as she sings. <br/> The six o'clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin' razor's cold and it stings. <br/>";
+
+	}
+
+	else if (video.currentTime > 38 && video.currentTime < 54){
+		lyric.innerHTML = "Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/>";
+	}
+
+	else if (video.currentTime > 55 && video.currentTime < 82.5){
+		lyric.innerHTML = "You once thought of me <br/> As a white knight on a steed. <br/> Now you know how happy I can be. <br/> Oh, and our good times start and end <br/> Without dollar one to spend. <br/> But how much, baby, do we really need. <br/>";
+	}
+
+	else if (video.currentTime > 85.5 && video.currentTime < 120){
+		lyric.innerHTML = "Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/>";
+	}
+
+	else if (video.currentTime > 127.5  && video.currentTime < 161){
+		lyric.innerHTML = "Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/>";
+	}
+	else {
+		lyric.innerHTML = ""
+	}
+});
+</script>
+</body>
+</html>
