@@ -12,6 +12,7 @@
 <video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" controls></video>
 <div id="lyrics"></div>
 
+
 <script>
 
 var lyric = document.getElementById("lyrics");
@@ -35,11 +36,15 @@ video.addEventListener("timeupdate", function(){
 		lyric.innerHTML = "Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/>";
 	}
 
+	else if (video.currentTime > 120 && video.currentTime < 127){
+		lyric.innerHTML = '<img src="musicnotes.png" alt="music notes"/>';
+	}
+
 	else if (video.currentTime > 127.5  && video.currentTime < 161){
 		lyric.innerHTML = "Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/>";
 	}
 	else {
-		lyric.innerHTML = ""
+		lyric.innerHTML = "";
 	}
 });
 </script>
