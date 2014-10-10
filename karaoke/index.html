@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-
+<html>
 <head>
 <meta charset="utf-8" />
 <title>Daydream Believer</title>
-<!--<link rel="stylesheet" href="style.css" type="txt/css" />-->
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
+
 <h1 id="title">Daydream Believer</h1>
 
 <video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" controls></video>
 <div id="lyrics"></div>
-
 
 <script>
 
@@ -20,7 +20,7 @@ var video = document.getElementById("music_video");
 
 video.addEventListener("timeupdate", function(){
 	if (video.currentTime > 5.5 && video.currentTime < 35){
-		lyric.innerHTML = "Oh, I could hide 'neath the wings <br/> Of the bluebird as she sings. <br/> The six o'clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin' razor's cold and it stings. <br/>";
+		lyric.innerHTML = 'Oh, I could hide neath the wings <br/> Of the <img src="bluebird.png" alt="bluebird"/> as she sings. <br/> The six o clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin razors cold and it stings. <br/>';
 
 	}
 
