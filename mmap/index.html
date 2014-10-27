@@ -59,6 +59,24 @@
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
 				});
+
+				sendData();
+			}
+
+			// Step 4: Send location to server
+			function sendData() {
+				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+				// In order to send data properly, see http://stackoverflow.com/questions/9713058/sending-post-data-with-a-xmlhttprequest
+				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				request.onreadystatechange = processStudentAndCharacterInfo;
+				request.send("login=TwilightSparkle&lat=" + myLat + "&lng=" + myLng);
+			}
+
+			function processStudentAndCharacterInfo {
+				if (request.readyState == 4 && request.status == 200) {
+					rawdata = request.responseText;
+					console.log(rawdata);
+				}
 			}
 		</script>
 	</head>
