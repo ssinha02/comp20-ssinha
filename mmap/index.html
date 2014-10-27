@@ -72,7 +72,7 @@
 				request.send("login=TwilightSparkle&lat=" + myLat + "&lng=" + myLng);
 			}
 
-			function processStudentAndCharacterInfo {
+			function processStudentAndCharacterInfo() {
 				if (request.readyState == 4 && request.status == 200) {
 					rawdata = request.responseText;
 					console.log(rawdata);
