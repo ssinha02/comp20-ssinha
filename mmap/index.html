@@ -122,16 +122,64 @@
 				var name = newCharacter["name"];
 				var location = newCharacter["loc"];
 				var note = location["note"];
-				var latitude = location["latitude"];
-				var longitude = location["longitude"];
-				var icon;
-				var properName;
+				var charLatitude = location["latitude"];
+				var charLongitude = location["longitude"];
+				var charIcon;
+				var displayName;
 				var distance;
 
 				if (name == "carmen") {
-					properName = "Carmen Sandiego";
-					icon = "carmen.png";
+					displayName = "Carmen Sandiego";
+					charIcon = "carmen.png";
 				}
+				else if (name == "waldo") {
+					displayName = "Waldo";
+					charIcon = "waldo.png";
+				}
+				else if (name == "batman") {
+					displayName = "Batman";
+					charIcon = "batman.png";
+				}
+				else if (name == "nr") {
+					displayName = "Norman Ramsey";
+					charIcon = "nr.png";
+				}
+				else if (name == "snape") {
+					displayName = "Professor Severus Snape";
+					charIcon = "nr.png";
+				}
+				else if (name == "hescott") {
+					displayName = "Professor Ben Hescott";
+					charIcon = "hescott.png";
+				}
+
+				var marker = new google.maps.Marker({
+					position: {lat: charLatitude, lng: charLongitude},
+					map: map,
+					title: name,
+					icon: charIcon
+				});
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: "<p>"+displayName+"</p"+"<p>Latitude: "+charLatitude+"</p>"+"<p>Longitude: "+charLongitude+"</p>"+"<p>Note: "+note+"</p>"
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.open(map, marker);
+				});
+
+				var coordinates = [{lat: myLat, lng: myLng}, {lat: charLatitude, lng: charLongitude}]
+				var line = new google.maps.Polyline({
+					path: coordinates,
+					geodesic: true;
+					strokeColor: '#FF0000',
+					strokeOpacity: 1.0,
+					strokeWeight: 2
+				});
+
+				line.setMap(map);
+
+				distance = 
 			}
 		</script>
 	</head>
