@@ -55,7 +55,9 @@
 				marker.setMap(map);
 
 				var infoWindow = new google.maps.InfoWindow({
-					content: "<p>TwilightSparkle</p>"+"<p>Latitude: "+myLat+"</p>"+"<p>Longitude: "+myLng+"</p>"
+					content: "<p>TwilightSparkle</p>"+
+					"<p>Latitude: "+myLat+"</p>"+
+					"<p>Longitude: "+myLng+"</p>"
 				});
 					
 				// Open info window on click of marker
@@ -113,7 +115,10 @@
 				});
 
 				var infoWindow = new google.maps.InfoWindow({
-					content: "<p>"+name+"</p"+"<p>Latitude: "+latitude+"</p>"+"<p>Longitude: "+longitude+"</p>"+"<p>Timestamp: "+time+"</p>"
+					content: "<p>"+name+"</p>"+
+					"<p>Latitude: "+latitude+"</p>"+
+					"<p>Longitude: "+longitude+"</p>"+
+					"<p>Timestamp: "+time+"</p>"
 				});
 
 				google.maps.event.addListener(marker, 'click', function() {
@@ -164,7 +169,10 @@
 				});
 
 				var infoWindow = new google.maps.InfoWindow({
-					content: "<p>"+displayName+"</p"+"<p>Latitude: "+charLatitude+"</p>"+"<p>Longitude: "+charLongitude+"</p>"+"<p>Note: "+note+"</p>"
+					content: "<p>"+displayName+"</p>"+
+						"<p>Latitude: "+charLatitude+"</p>"+
+						"<p>Longitude: "+charLongitude+"</p>"+
+						"<p>Note: "+note+"</p>"
 				});
 
 				google.maps.event.addListener(marker, 'click', function() {
