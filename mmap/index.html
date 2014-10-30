@@ -213,7 +213,6 @@
 			}
 
 			function getDistance() {
-				var distString = "Distances (miles)";
 				var name;
 				var distance;
 
@@ -222,7 +221,7 @@
 				for (i = 0; i < distances.length; i++) {
 					name = distances[i][0];
 					distance = distances[i][1];
-					distString = distString "<p>"+name+": "+distance+"</p";
+					var distString = "<p> Distance: "+name+": "+distance+"</p";
 				}
 				return distString;
 			}
