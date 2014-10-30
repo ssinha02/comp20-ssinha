@@ -81,7 +81,7 @@
 			function processStudentAndCharacterInfo() {
 				if (request.readyState == 4 && request.status == 200) {
 					rawdata = request.responseText;
-					console.log(rawdata);
+					//console.log(rawdata);
 
 					var data = JSON.parse(rawdata);
 					var characters = data["characters"];
@@ -99,7 +99,7 @@
 						characterMarker(newCharacter);
 					}
 
-					document.getElementById("results").innerHTML = getDistance();
+					//document.getElementById("results").innerHTML = getDistance();
 				}
 			}
 
@@ -225,7 +225,7 @@
 				var name;
 				var distance;
 
-				distances.sort(sortDistances);
+				distance.sort(sortDistances);
 
 				for (i = 0; i < distances.length; i++) {
 					name = distances[i][0];
