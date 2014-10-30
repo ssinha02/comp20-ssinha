@@ -19,6 +19,7 @@
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
 			var map;
+			var distances = [];
 			
 			function init() {
 
@@ -192,6 +193,7 @@
 				line.setMap(map);
 
 				distance = calcDistance(charLatitude, charLongitude);
+				distances.push([displayName, distance]);
 			}
 
 			function calcDistance(charLatitude, charLongitude) {
@@ -223,7 +225,7 @@
 				var name;
 				var distance;
 
-				distance.sort(sortDistances);
+				distances.sort(sortDistances);
 
 				for (i = 0; i < distances.length; i++) {
 					name = distances[i][0];
