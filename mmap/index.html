@@ -136,10 +136,10 @@
 				var displayName;
 				var distance;
 
-				//if (name == "carmen") {
-				//	displayName = "Carmen Sandiego";
-				//	charIcon = "carmen.png";
-				//}
+				if (name == "carmen") {
+					displayName = "Carmen Sandiego";
+					charIcon = "carmen.png";
+				}
 				if (name == "waldo") {
 					displayName = "Waldo";
 					charIcon = "waldo.png";
@@ -192,7 +192,6 @@
 				line.setMap(map);
 
 				distance = calcDistance(charLatitude, charLongitude);
-				distance.push([displayName, distance]);
 			}
 
 			function calcDistance(charLatitude, charLongitude) {
