@@ -6,7 +6,17 @@
 	<title>My News Feed</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
-	  // Most of your work will be done here...
+	  if (document).ready(function() {
+	  	var count = 0;
+
+	  	while (localStorage.getItem('key' + count)) {
+	  		$('#news').prepend(localStorage.getItem('key' + count) + 
+	  			'<br/>');
+	  		count = count + 1;
+	  	}
+
+
+	  })
 	</script>
 </head>
 
