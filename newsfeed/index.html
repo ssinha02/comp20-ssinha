@@ -4,9 +4,9 @@
 
 <head>
 	<title>My News Feed</title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
-	  if (document).ready(function() {
+	  $(document).ready(function() {
 	  	var count = 0;
 
 	  	while (localStorage.getItem('key' + count)) {
@@ -15,8 +15,17 @@
 	  		count = count + 1;
 	  	}
 
-
-	  })
+	  	$('#msg:input').keyup(function (e) {
+	  		if (e.keyCode == 13) {
+	  			var timeStamp = Date.now();
+	  			var text = document.getElementById("msg");
+	  			localStorage.setItem('key' + count, + timeStamp + ' - ' + this.value);
+	  			$('#news').prepend(localStorage.getItem('key' + count) + '<br/>');
+	  			count = count + 1;
+	  			this.value = '';
+	  		}
+	  	});
+	  });
 	</script>
 </head>
 
