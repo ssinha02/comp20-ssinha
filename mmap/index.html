@@ -19,8 +19,7 @@
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
 			var map;
-			var marker;
-			var infowindow = new google.maps.InfoWindow();
+			var distances = [];
 			
 			function init() {
 
@@ -48,17 +47,202 @@
 				map.panTo(me);
 	
 				// Create a marker
-				marker = new google.maps.Marker({
+				var marker = new google.maps.Marker({
 					position: me,
-					title: "Here I Am!"
+					map: map,
+					title: "TwilightSparkle",
+					icon: "smiley.png"
 				});
 				marker.setMap(map);
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: "<p>TwilightSparkle</p>"+
+					"<p>Latitude: "+myLat+"</p>"+
+					"<p>Longitude: "+myLng+"</p>"
+				});
 					
 				// Open info window on click of marker
 				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.setContent(marker.title);
-					infowindow.open(map, marker);
+					infoWindow.open(map, marker);
 				});
+
+				sendData();
+			}
+
+			// Step 4: Send location to server
+			function sendData() {
+				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+				// In order to send data properly, see http://stackoverflow.com/questions/9713058/sending-post-data-with-a-xmlhttprequest
+				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				request.onreadystatechange = processStudentAndCharacterInfo;
+				request.send("login=TwilightSparkle&lat=" + myLat + "&lng=" + myLng);
+			}
+
+			function processStudentAndCharacterInfo() {
+				if (request.readyState == 4 && request.status == 200) {
+					rawdata = request.responseText;
+					//console.log(rawdata);
+
+					var data = JSON.parse(rawdata);
+					var characters = data["characters"];
+					var students = data["students"];
+
+					var newStudent;
+					for (i = 0; i < students.length; i++) {
+						newStudent = students[i];
+						studentMarker(newStudent);
+					}
+
+					var newCharacter;
+					for (i = 0; i < characters.length; i++) {
+						newCharacter = characters[i];
+						characterMarker(newCharacter);
+					}
+
+					//document.getElementById("rawdata").innerHTML = getDistance();
+					//unable to display distance on map
+				}
+			}
+
+			function studentMarker(newStudent) {
+				var name = newStudent["login"];
+				var time = newStudent["created_at"];
+				var latitude = newStudent["lat"];
+				var longitude = newStudent["lng"];
+
+				var marker = new google.maps.Marker({
+					position: {lat: latitude, lng: longitude},
+					map: map,
+					title: name
+				});
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: "<p>"+name+"</p>"+
+					"<p>Latitude: "+latitude+"</p>"+
+					"<p>Longitude: "+longitude+"</p>"+
+					"<p>Timestamp: "+time+"</p>"
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.open(map, marker);
+				});
+			}
+
+			function characterMarker(newCharacter) {
+				var name = newCharacter["name"];
+				var location = newCharacter["loc"];
+				var note = location["note"];
+				var charLatitude = location["latitude"];
+				var charLongitude = location["longitude"];
+				var charIcon;
+				var displayName;
+				var distance;
+
+				if (name == "carmen") {
+					displayName = "Carmen Sandiego";
+					charIcon = "carmen.png";
+				}
+				if (name == "waldo") {
+					displayName = "Waldo";
+					charIcon = "waldo.png";
+				}
+				else if (name == "batman") {
+					displayName = "Batman";
+					charIcon = "batman.png";
+				}
+				else if (name == "nr") {
+					displayName = "Norman Ramsey";
+					charIcon = "nr.png";
+				}
+				else if (name == "snape") {
+					displayName = "Professor Severus Snape";
+					charIcon = "nr.png";
+				}
+				else if (name == "hescott") {
+					displayName = "Professor Ben Hescott";
+					charIcon = "hescott.png";
+				}
+
+				var marker = new google.maps.Marker({
+					position: {lat: charLatitude, lng: charLongitude},
+					map: map,
+					title: name,
+					icon: charIcon
+				});
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: "<p>"+displayName+"</p>"+
+						"<p>Latitude: "+charLatitude+"</p>"+
+						"<p>Longitude: "+charLongitude+"</p>"+
+						"<p>Note: "+note+"</p>"
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.open(map, marker);
+				});
+
+				var coordinates = [{lat: myLat, lng: myLng}, {lat: charLatitude, lng: charLongitude}]
+
+				var line = new google.maps.Polyline({
+					path: coordinates,
+					geodesic: true,
+					strokeColor: '#FF0000',
+					strokeOpacity: 1.0,
+					strokeWeight: 2
+				});
+
+				line.setMap(map);
+
+				distance = calcDistance(charLatitude, charLongitude);
+				distances.push([displayName, distance]);
+			}
+
+			function calcDistance(charLatitude, charLongitude) {
+				Number.prototype.toRad = function() {
+					return this * Math.PI / 180;
+				}
+
+				var lat1 = myLat;
+				var lat2 = charLatitude;
+				var lng1 = myLng;
+				var lng2 = charLongitude;
+
+				var R = 3959;
+				var latDiff = lat2 - lat1;
+				var latDist = latDiff.toRad();
+				var lngDiff = lng2 - lng1;
+				var lngDist = lngDiff.toRad();
+
+				var a = Math.sin(latDist/2) * Math.sin(latDist/2) + 
+					Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+					Math.sin(lngDist/2) * Math.sin(lngDist/2);
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(a - 1));
+				var d = R * c;
+
+				return d;
+			}
+
+			function getDistance() {
+				var name;
+				var distance;
+
+				distance.sort(sortDistances);
+
+				for (i = 0; i < distances.length; i++) {
+					name = distances[i][0];
+					distance = distances[i][1];
+					var distString = "<p> Distance: "+name+": "+distance+"</p";
+				}
+				return distString;
+			}
+
+			function sortDistances(x, y) {
+				if (x[1] === y[1]) {
+					return 0;
+				}
+				else {
+					return (x[1] < y[1]) ? -1 : 1
+				}
 			}
 		</script>
 	</head>
